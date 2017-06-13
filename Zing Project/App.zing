@@ -1,0 +1,41 @@
+Rectangle as root {
+    
+    color: #white
+    
+    alias auth
+    
+    event logout 
+    on logout {
+        // data.clear()
+    }
+    
+    Apple.NavigationBar {
+        anchor boundsX
+        title: "Welcome"
+    }
+
+
+    
+    
+}
+
+// Used on Android to capture the authentication code sent back from a web browser
+on System.broadcastMessage(message) {
+    var codeValue = String(message.code)
+    var stateValue = String(message.state)
+    // auth.startAuthFlow(codeValue, stateValue)
+}
+
+
+on @Authorised entered {
+
+}
+
+on @NotAuthorised entered {
+    View.present(new LoginSheet{
+        app: root})
+    // View.present(LoginSheet)
+    
+}
+
+Logic.Authentication as auth {}

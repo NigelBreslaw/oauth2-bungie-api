@@ -1,0 +1,5 @@
+Project {
+    main: "App.zing"
+    syntaxVersion: 5180
+    statusBar: 1
+}
