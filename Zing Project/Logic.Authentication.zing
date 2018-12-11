@@ -15,32 +15,32 @@ Item as root {
     property String tokenSettingReference: bungieMembershipId+"OauthToken"
     
     
-    // Register your app to get an API key, client ID and Client Secret at https://www.bungie.net/en/Application
-    // applicationUrlScheme is the redirect e.g. for mydestinyapp//: redirect it would be 'mydestinyapp'
-    // Ensure you chose a 'confidential' client
+    /// Register your app to get an API key, client ID and Client Secret at https://www.bungie.net/en/Application
+    /// applicationUrlScheme is the redirect e.g. for mydestinyapp//: redirect it would be 'mydestinyapp'
+    /// Ensure you chose a 'confidential' client
     property String apiKey
     property String clientId
     property String clientSecret
     property String applicationUrlScheme
     
-    // App authorization URL can be see on the page you create for your app
+    /// App authorization URL can be see on the page you create for your app
     property String authorizationUrl: "https://www.bungie.net/en/oauth/authorize?client_id="+clientId+"&response_type=code"
     
-    // Enusure your app has the following scope permissions on bungie.net
-    // 1. Read your Destiny vault and character inventory.
-    // 2. Read your Destiny vendor and advisor information.
-    // 3. Move or equip Destiny gear and other items.
+    /// Enusure your app has the following scope permissions on bungie.net
+    /// 1. Read your Destiny vault and character inventory.
+    /// 2. Read your Destiny vendor and advisor information.
+    /// 3. Move or equip Destiny gear and other items.
     
-    // Determine if app is running on iOS (Use shared safari view) or Android (Redirect to sytem browser)
+    /// Determine if app is running on iOS (Use shared safari view) or Android (Redirect to sytem browser)
     property Bool isAndroid: false
     // isAndroid@device(Android): true
     
-    // Should this app use a state code when authorizing an account
+    /// Should this app use a state code when authorizing an account
     property Bool useStateCode
     
     
-    //--------------------------
-    // Properties to share what state this element is in
+    ///--------------------------
+    /// Properties to share what state this element is in
     property Bool notAuthorizedState: @NotAuthorized
     property Bool authorizedState: @Authorized
     
@@ -52,18 +52,18 @@ Item as root {
     
     
     
-    // events
+    /// events
     
-    // Used when both refresh and access tokens are valid
+    /// Used when both refresh and access tokens are valid
     event authorizationIsValid
     
-    // Used when authorization has failed at a point where the only solution it to re-authorize the app
+    /// Used when authorization has failed at a point where the only solution it to re-authorize the app
     event authorizationInvalid
     
     event readyForAuth
     
     
-    // All endpoints should use this to get an authorised Http.Request
+    /// All endpoints should use this to get an authorised Http.Request
     async function getAuthRequest()->Http.Request {
         
         await internal._buildAuth()
@@ -292,7 +292,7 @@ Item as root {
             buildAuthBusy = false
         }
         
-        // returns true if the token has more than 5 minutes life left
+        /// returns true if the token has more than 5 minutes life left
         function isThisTokenValid(App.Type.OauthToken token, Authentication.Token type)->Bool {
             
             var timeNow = DateTime.now()
@@ -320,9 +320,9 @@ Item as root {
             }
         }
         
-        //-------------------------------------------
-        // END POINTS
-        //-------------------------------------------
+        ///-------------------------------------------
+        /// END POINTS
+        ///-------------------------------------------
         async function getAccessTokenFromCode(String authCode)->Json {
             
             var http = new Http {}
@@ -441,10 +441,7 @@ Item as root {
             System.log(internal.oauthToken.createdAt)
             internal.processAccessAndRefreshTokens(accessTokenJson, Authentication.JsonToken.FromEndpoint)
             System.log(internal.oauthToken.createdAt)
-            
-            
-            
-            
+
             System.saveSetting("bungieMembershipId", membershipId)
             
             root.readyForAuth()
@@ -459,15 +456,15 @@ Item as root {
     
     
     
-    // Authenticate this app functions
+    /// Authenticate this app functions
     
     function getAuthCode() {
         
-        // Generate state code
+        /// Generate state code
         var localState = generateStateCode()
         internal.stateCode = localState
         
-        // Create full auth Url
+        /// Create full auth Url
         var authUrl = root.authorizationUrl+"&state="+localState
         
         // Android relies on some native code in the main activity to pick up the redirect from the devices browser
@@ -494,7 +491,7 @@ on @Init entered {
     
     // Check registered app details from bungie.net exist
     
-    if apiKey != "" && clientId != "" && clientSecret != "" && applicationUrlScheme != ""{
+    if root.apiKey != "" && root.clientId != "" && root.clientSecret != "" && root.applicationUrlScheme != ""{
         root.initComplete()
     } else {
         System.log("Missing apiKey, client_id, client_secret and application URL scheme")
@@ -516,7 +513,7 @@ on @Ready entered {
 }
 
 on @NotAuthorized entered {
-    deleteAllLoginData() 
+    root.deleteAllLoginData() 
 }
 
 

@@ -2,8 +2,6 @@
 System.Argon.Machine {
     System.Argon.State {
         name: "Init"
-        y: 0
-        x: 0
         id: 1
         transitions: [
             System.Argon.Transition {
@@ -14,16 +12,13 @@ System.Argon.Machine {
 ]
     }
      System.Argon.State {
+         configuration design "{x:160,y:0}"
          childMode: 1
-         y: 0
-         x: 160
          id: 5
          System.Argon.State {
              id: 6
              System.Argon.State {
                  name: "PreAuth"
-                 y: 0
-                 x: 0
                  id: 2
                  transitions: [
                      System.Argon.Transition {
@@ -37,9 +32,8 @@ System.Argon.Machine {
              ]
              }
              System.Argon.State {
+                 configuration design "{x:75.265,y:137.043}"
                  name: "Authorized"
-                 y: 137.043
-                 x: 75.265
                  id: 4
                  transitions: [
                      System.Argon.Transition {
@@ -49,9 +43,8 @@ System.Argon.Machine {
              ]
              }
              System.Argon.State {
+                 configuration design "{x:179.178,y:0}"
                  name: "NotAuthorized"
-                 y: 0
-                 x: 179.178
                  id: 3
                  transitions: [
                      System.Argon.Transition {
@@ -74,9 +67,8 @@ System.Argon.Machine {
 ]
              }
              System.Argon.State {
+                 configuration design "{x:0,y:134.013}"
                  name: "Ready"
-                 y: 134.013
-                 x: 0
                  id: 9
                  transitions: [
                      System.Argon.Transition {
